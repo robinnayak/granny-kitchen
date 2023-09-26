@@ -177,13 +177,20 @@ class CartItem(models.Model):
 
 
 class Payment(models.Model):
-    order = models.OneToOneField(Order,on_delete=models.CASCADE)
     payment_method = models.CharField(max_length=200,blank=True)
     total_amount = models.DecimalField(max_digits=8,decimal_places=3)
+    order_accept = models.OneToOneField(OrderAccept,on_delete=models.CASCADE,related_name='payment_order_accept')
 
     def __str__(self):
         return self.total_amount
 
+class Recipt(models.Model):
+    payment = models.OneToOneField(Payment,on_delete=models.CASCADE,related_name='payment_recipt')
+    recipt_name = models.CharField(max_length=200,blank=True,null=True)
+    paid_amount = models.IntegerField(default=0)
+    def __str__(self):
+        return self.recipt_name
+    
 class Delivery (models.Model):
     order = models.OneToOneField(Order,on_delete=models.CASCADE)
     delivery_address = models.CharField(max_length=200,blank=True)

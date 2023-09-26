@@ -17,6 +17,6 @@ urlpatterns = [
     path('delete-item/<str:pk>/',views.order_item_delete,name="deleteitem"),
     path('delete-order/<str:pk>/',views.order_delete,name="delete_order"),
     path('notify-customer/',views.notify_purchase_to_customer,name='notify_customer'),
-    path('payment/',views.accept_order_payment,name='accept-order-payment')
-
+    path('payment/<str:pk>/',views.accept_order_payment,name='accept-order-payment'),
+    path('recipt/',views.recipt,name='recipt'),
 ]

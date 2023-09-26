@@ -148,6 +148,23 @@ def notify_purchase_to_customer(request):
     
     return redirect('moms:login')
 
-def accept_order_payment(request):
-    context = {}
+def accept_order_payment(request,pk):
+    order_accept_notification = OrderAcceptNotifcation.objects.get(id=pk)
+    order_accept_id = order_accept_notification.order_accept.id
+    order_accept_obj = OrderAccept.objects.get(id=order_accept_id)
+    total_price = order_accept_obj.order_placed.order_placed.total_price
+    quantity = order_accept_obj.order_placed.order_placed.quantity
+    
+    item_name = order_accept_obj.order_placed.order_placed.menu_item.name
+    payment = Payment.objects.get_or_create(payment_method="e-pay", total_amount=total_price,order_accept=order_accept_obj)
+    if request.method == "POST":
+        recipt = Recipt.objects.get_or_create(payment=payment,recipt_name=item_name)
+        return redirect('customer:recipt')
+    context = {'payment':payment,'quantity':quantity,'item_name':item_name,'total_price':total_price}
     return render(request, 'customer/payment.html',context)
+
+
+def recipt(request):
+
+    context = {}
+    return render(request,'customer/recipt.html',context)

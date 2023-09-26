@@ -2,5 +2,12 @@
 
 {% block content %}
     <div> payment page </div>
-    
+    <div>order item name : {{item_name}} </div>
+    <div>total price to be paid: {{total_price}} </div>
+    <div>quantity : {{quantity}}</div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        pay amount :<input type="text" name="payment" id="payment">
+        <button type="submit">pay</button>
+    </form>
 {% endblock content %}

@@ -1,4 +1,4 @@
-from .models import MomModel,Menu,Order,Offer,Payment,Delivery,Review,MomsStar,MenuItem,Cart,CartItem,OrderItem
+from .models import *
 from django import forms
 
 

@@ -8,7 +8,7 @@
                 <p>{{msg}}</p>
                 <p>{{msg.id}}</p>
             </li>
-            <a href="{% url 'customer:accept-order-payment' %}">pay</a> 
+            <a href="{% url 'customer:accept-order-payment' msg.id %}">pay</a> 
 
         </ul>
     {% endfor %}
