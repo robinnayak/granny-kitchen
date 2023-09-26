@@ -1,0 +1,122 @@
+{% extends "base.html" %} 
+
+ {% block style %}
+  <style>
+ /* login.css */
+
+/* Style the container */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style the form inputs */
+.login-container input[type=text],
+.login-container input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Style the login button */
+.login-container button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Add hover effect to the login button */
+.login-container button:hover {
+  opacity: 0.8;
+}
+
+/* Style the form heading */
+.login-heading {
+  text-align: center;
+}
+
+/* Style the error message */
+.error-message {
+  color: red;
+  text-align: center;
+}
+.register-link {
+  text-align: center;
+}
+
+.register-link a {
+  color: #4CAF50;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+</style>
+ {% endblock style %}
+  
+ {% comment %} {% extends "base.html" %} {% block content %}
+ <h1 style="color: red">welcome to login page</h1>
+<form method="POST">
+  {% csrf_token %}
+  <label for="username"
+    >username :
+    <input type="text" name="username" id="username" />
+  </label>
+  <label for="username"
+    >password :
+    <input type="password" name="password" id="password" />
+  </label>
+  <button type="submit">Login</button>
+
+  <div>
+    Don't have an account?
+    <a href="{% url 'register:register' %}">moms register</a>
+    <a href="{% url 'register:customerregister' %}">customer register</a>
+  </div>
+</form>
+{% endblock %} {% endcomment %}
+
+
+{% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="" id='msg' role="alert">
+      {{message}}
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+<div class="login-container">
+  <h2 class="login-heading">Login</h2>
+  {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+    {% comment %} <form method="post" action="{% url 'moms:profile' %}"> {% endcomment %}
+    <form method="POST" action="">
+      {% csrf_token %}
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+    <p class="register-link">Not registered yet? <a href="{% url 'register:register' %}">Mom Register</a></p>
+    <p class="register-link">Not registered yet? <a href="{% url 'register:customerregister' %}">Customer Register</a></p>
+  </div>
+{% endblock %} 

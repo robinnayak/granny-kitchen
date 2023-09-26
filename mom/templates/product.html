@@ -1,0 +1,82 @@
+{% extends "base.html" %} 
+
+{% block style %}
+<style>
+    .container{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .item{
+        border: 1px solid red;
+        padding: 1rem;
+
+    }
+    .itemimage{
+        /* border: 1px solid yellow; */
+        min-width: 500px;
+        min-height: 300px;
+    }
+    .itemdetail{
+        display: flex;
+        justify-content: space-between;
+    }
+    .button{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center ;
+        margin-right: 1rem;
+        padding: 0.5rem;
+    }
+    .menudetail{
+        margin-top: 2rem;
+        padding: 1rem;
+        /* border: 1px solid red; */
+    }
+</style>
+
+{% endblock style %}
+
+
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container">
+  <div class="item">
+    <div class="image">
+        {% if item.item_image.url != None %}
+            <img width="450px" height="350px" src="{{item.item_image.url}}" alt="item image" srcset="">
+        {% else %}
+            <img width="450px" height="350pxpx" src="" alt="item image" srcset="">
+        {% endif %}
+    </div>
+    <div class="itemdetail">
+      <div class="items">
+        <div class="detailtext">
+          <div class="inline">item name:{{item.name}}</div>
+          <div class="inline">price:{{item.price}}</div>
+          <div class="inline">description {{item.description}}:</div>
+          <div class="inline">available : {{item.is_available}}</div>
+          <div class="inline">created at :</div>
+          <div class="inline">expiry at:</div>
+        </div>
+      </div>
+      <div class="button">
+        <a href="">add to cart</a>
+        <a href="{% url 'customer:createorder' item.id %}">pre order</a>
+      </div>
+    </div>
+  </div>
+  <div class="menudetail">
+    <div>mom name: {{item.menu.moms}}</div>
+    <div>mom email: {{item.menu.moms.email}}</div>
+    <div>phone number: {{item.menu.moms.phone_number}}</div>
+    <div>menu name: {{item.menu}}</div>
+    <div>menu description{{item.menu.description}}</div>
+    <a href="{% url 'customer:momprofile' item.menu.moms.id %}">mom page</a> 
+    <hr />
+    <hr />
+  </div>
+</div>
+{% endblock content %}

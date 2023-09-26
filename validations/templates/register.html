@@ -1,0 +1,106 @@
+{% extends "base.html" %} {% block style %}
+<style>
+  /* register.css */
+
+  /* Style the container */
+  .register-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  /* Style the form inputs */
+  .register-container input[type="text"],
+  .register-container input[type="password"], 
+  .register-container input[type="email"]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  /* Style the register button */
+  .register-container button {
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* Add hover effect to the register button */
+  .register-container button:hover {
+    opacity: 0.8;
+  }
+
+  /* Style the form heading */
+  .register-heading {
+    text-align: center;
+  }
+
+  /* Style the error message */
+  .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+.register-link {
+    text-align: center;
+  }
+  
+  .register-link a {
+    color: #4CAF50;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock style %} 
+
+{% block content %} 
+<!-- register.html -->
+
+  <div class="register-container">
+    <h2 class="register-heading">Register</h2>
+    <form method="POST" >
+      {% csrf_token %}
+      <label for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.username }}
+      <br>
+      <label for="{{ form.email.id_for_label }}">Email</label>
+      {{ form.email }}
+      <br>
+      <label for="{{ form.password1.id_for_label }}">Password</label>
+      {{ form.password1 }}
+      <br>
+      <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+      {{ form.password2 }}
+      <br>
+      <button type="submit">Register</button>
+    </form>
+    <p class="register-link">Already Have an Account? <a href="{% url 'moms:login' %}">Login</a></p>
+
+  </div>
+
+{% endblock content %} 
+
+{% comment %} {%
+block content %}
+<h1>{{formname}} register page</h1>
+<form method="POST">
+  {% csrf_token %} {{form.as_p}}
+  <button type="submit">register</button>
+  <div>
+    Already have an account?
+    <a href="{% url 'moms:login' %}">login</a>
+  </div>
+</form>
+{% endblock %} {% endcomment %}

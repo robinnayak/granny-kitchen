@@ -1,0 +1,16 @@
+{% include 'navbar.html' %}
+
+{% block content %}
+    <p> notification page:  </p>
+    {% for msg in order_message %}
+        <ul>
+            <li>
+                <p>{{msg}}</p>
+                <p>{{msg.id}}</p>
+            </li>
+            <a href="{% url 'customer:accept-order-payment' %}">pay</a> 
+
+        </ul>
+    {% endfor %}
+
+{% endblock content %}

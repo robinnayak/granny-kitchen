@@ -1,0 +1,72 @@
+{% extends "customer/base.html" %}
+{% comment %} context = {'moms':moms,'menus':menus,'menu_item':menu_item} {% endcomment %}
+{% block style %}
+<style>
+    .container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .item_container{
+        display: flex;
+        /* flex-direction: column; */
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<h1>mom profile</h1>
+<div class="container">
+    <div class="moms">
+        <div class="images">
+            {% if moms.profile.url != None %}
+            <img width="200px" height="250px" src="{{moms.profile.url}}" alt="item image" srcset="" />
+            {% else %}
+            <img width="300px" height="200px" src="" alt="item image" srcset="" />
+            {% endif %}
+        </div>
+
+        <div class="momsdetail">kitichen name: {{moms.kitichen_name}} </div>
+        <div class="momsdetail">email: {{moms.email}} </div>
+        <div class="momsdetail">phone number: {{moms.phone_number}} </div>
+        <div class="momsdetail">cuisine_type: {{moms.phone_number}} </div>
+
+    </div>
+    <div class="menu">
+        <h1> menu </h1>
+        {% for menu in menus %}
+        <div class="momsdetail">moms name: {{menu.moms}} </div>
+        <div class="momsdetail">menu name: {{menu.moms}} </div>
+        <div class="momsdetail">menu discription: {{menu.moms}} </div>
+        <hr>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+<div class="menu_items">
+    
+    <h1> menu items available </h1>
+    {% for item in menu_item %}
+    <div class="item_container">
+        
+        <div class="images">
+            {% if item.item_image.url != None %}
+            <img width="200px" height="250px" src="{{item.item_image.url}}" alt="item image" srcset="" />
+            {% else %}
+            <img width="300px" height="200px" src="" alt="item image" srcset="" />
+            {% endif %}
+        </div>
+        <div class="momsdetail">menu name: {{item.menu}} </div>
+        <div class="momsdetail">item name: {{item.name}} </div>
+        <div class="momsdetail">description name: {{item.description}} </div>
+        <div class="momsdetail">item price: {{item.price}} </div>
+        <div class="momsdetail">available: {{item.is_available}} </div>
+        <a href="{% url 'moms:product' item.id %}"> view product </a>
+    
+    </div>
+        {% endfor %}
+</div>
+
+{% endblock content %}

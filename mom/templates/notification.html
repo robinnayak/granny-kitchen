@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+    <p> notification page:  </p>
+
+    {% for msg in order_message %}
+        <ul>
+            <li>
+                <p>{{msg}}</p>
+                <p>{{msg.id}}</p>
+                <a href="{% url 'moms:order_accept' msg.id %}">order accept</a> 
+                <a href="#">cancel</a>
+            </li>
+        </ul>
+    {% endfor %}
+
+{% endblock content %}

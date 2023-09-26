@@ -1,0 +1,94 @@
+{% extends "base.html" %} {% block style %}
+<style>
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .profile {
+    border: 1px solid red;
+    padding: 2rem;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    /* border: 1px solid yellow; */
+    padding: 2rem;
+  }
+  .items{
+    flex-basis: 33.33%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-left:1px solid red ;
+  }
+</style>
+
+{% endblock style %} {% block content %}
+{% include 'navbar.html' %}
+
+
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{message.tag}} m-2" id='msg' role="alert">
+      {{message}}
+    </div>
+  {% endfor %}
+{% endif %}
+
+  <div class="profile">
+    
+    <h2>profile page {{name}}</h2>
+    
+    <div>
+      <p>kitichen name : {{mom.user}}</p>
+      <p>kitichen name : {{mom.kitchen_name}}</p>
+      <p>email : {{mom.email}}</p>
+      <p>address : {{mom.address}}</p>
+      <p>phone : {{mom.phone_number}}</p>
+
+      {% if mom.profile.url != None %}
+      <img
+        src="{{mom.profile.url}}"
+        alt="profile"
+        srcset=""
+        width="100px"
+        height="150px"
+      />
+      {% endif %}
+      <a href="{% url 'moms:updateprofile' mom.id  %}">update</a>
+      <a href="{% url 'moms:deleteprofile' %}">delete</a>
+      <a href="{% url 'moms:logout' %}">logout</a>
+      <a href="{% url 'moms:notify_mom' %}">notify mom</a>
+      <a href="http://facebook.com">
+        facebook</a>
+      <a href="http://instagram.com">
+        instagram</a>
+    </div>
+  </div>
+  <div class="menu">
+    <h1>menu page</h1>
+    <div class="items">
+      {% for menu in menus %}
+      <p>moms : {{menu.moms}}</p>
+      <p>menu name : {{menu.name}}</p>
+      <p>description : {{menu.description}}</p>
+      <p>count: {{menu.num_item}}</p>
+      <a href="{% url 'moms:menuview' mom.id menu.id%}"> items view</a>
+      <a href="{% url 'moms:menuupdate' menu.id%}"> menu update view</a>
+      <a href="{% url 'moms:menudelete' menu.id%}"> menu delete view</a>
+      <hr />
+      <hr />
+      {% endfor %}
+    </div>
+    <a href="{% url 'moms:menu' %}"> create new menu</a>
+    <a href="{% url 'moms:menuitems' %}"> create new menu item</a>
+  </div>
+  </div>
+</div>
+{% endblock content %}

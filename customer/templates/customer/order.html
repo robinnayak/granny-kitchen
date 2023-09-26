@@ -1,0 +1,47 @@
+{% extends "customer/base.html" %}
+{% load static %}
+{% block content %}
+<h3>order page</h3>
+
+{% for order in orders %}
+
+</div>
+<div>mom name : {{order.moms}}</div>
+<div>status : {{order.status}}</div>
+<div>is delivered : {{order.is_delivered}}</div>
+<hr/>
+{% for item in order.order.all %}
+{% if item.menu_item.item_image.url != None %}
+<img width="300px" height="200px" src="{{item.menu_item.item_image.url}}" alt="item image" srcset="" />
+{% else %}
+<img width="300px" height="200px" src="" alt="item image" srcset="" />
+{% endif %}
+
+<div>item name: {{item.menu_item}}</div>
+<div>quantiy : {{item.quantity}}</div>
+<!-- <button onclick="updateQuantity('{{item.quantity}}','add','{{item.id}}')" >add</button> -->
+<div>real price : {{item.menu_item.price}}</div>
+<div>updated price : {{item.total_price}} </div>
+<div>item image : {{item.menu_item.item_image}}</div>
+<a href="{% url 'customer:deleteitem' item.id %}" type="submit">delete</a>
+<button onclick="updateQuantity('{{item.id}}','add')" >+</button>
+<button onclick="updateQuantity('{{item.id}}','sub')" >-</button>
+<a href="{% url 'customer:buy' item.id %}">pre order now</a>
+<hr/>
+{% endfor %} 
+ 
+<hr>
+<hr>
+{% endfor %}
+
+
+<script>
+    function updateQuantity(item_id,operation){
+        var url = "{% url 'customer:orderview' %}" + '?item_id=' + item_id + '&operation=' + operation
+        window.location.href = url
+    }
+
+</script>    
+{% comment %} window.location.href = window.location.pathname + `?quantity=${quantity}` {% endcomment %}
+
+{% endblock content %}

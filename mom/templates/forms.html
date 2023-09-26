@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
+
+
+<h1>{{formname}} form</h1>
+
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+    {{form}}
+  <button type="submit">update</button>
+</form>
+{% endblock content %}

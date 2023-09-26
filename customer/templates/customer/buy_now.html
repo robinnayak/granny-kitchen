@@ -1,0 +1,39 @@
+{% extends "customer/base.html" %} {% block content %}
+<div class="order">order placed succesfully</div>
+
+<div class="container">
+    <div class="ordered_item">
+        <div class="item">
+            <div class="image">
+                {% if ordered_item.menu_item.item_image.url != None %}
+                <img width="250px" height="200px" src="{{ordered_item.menu_item.item_image.url}}" alt="item image" srcset="">
+                {% else %}
+                <img width="450px" height="350pxpx" src="" alt="item image" srcset="">
+                {% endif %}
+            </div>
+            <div class="detailtext">
+                <div class="inline">item name:{{ordered_item.menu_item.name}}</div>
+                <div class="inline">price:{{ordered_item.menu_item.price}}</div>
+                <div class="inline">total price:{{order_placed.order_placed.total_price}}</div>
+                <div class="inline">No of quantity:{{order_placed.order_placed.quantity}}</div>
+                
+                <div class="inline">description :  {{ordered_item.menu_item.description}}</div>
+                <div class="inline">available : {{ordered_item.menu_item.is_available}}</div>
+                <div class="inline">created at :</div>
+                <div class="inline">expiry at:</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="order_placed">
+        <p>order is placed request is sent for order id {{order_placed.id}}   </p>
+        <p>order is requestd for the mom "{{order_placed.order_placed.order.moms}}"</p>
+        <a href="{% url 'moms:home' %}">home</a>
+    </div>
+</div>
+
+<!-- context = {'ordered_item':ordered_item_obj,'order_placed':order_placed_obj} -->
+
+
+{% endblock content %}
+

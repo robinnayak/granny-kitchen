@@ -1,0 +1,49 @@
+{% extends "base.html" %} 
+
+{% block style %}
+<style>
+    .container{
+        display: flex;
+        justify-content: space-around;
+        align-items : center;
+    }
+</style>
+
+
+{% endblock style %}
+
+{% block content %} 
+
+
+
+<div class="container">
+
+    {% for mom in moms %}
+    
+<div class="profile">
+    <h2>profile page {{name}}</h2>
+
+  <div>
+    <p>kitichen name : {{mom.user}}</p>
+    <p>kitichen name : {{mom.kitchen_name}}</p>
+    <p>email : {{mom.email}}</p>
+    <p>address : {{mom.address}}</p>
+    <p>phone : {{mom.phone_number}}</p>
+
+    {% if mom.profile.url != None %}
+    <img
+    src="{{mom.profile.url}}"
+      alt="profile"
+      srcset=""
+      width="100px"
+      height="150px"
+      />
+      {% endif %}
+
+    </div>
+</div>
+<hr>
+<hr>
+{% endfor %} 
+</div>
+{% endblock content %}

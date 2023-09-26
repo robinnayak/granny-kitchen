@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block style %}
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: "cyan";
+  }
+
+  .items {
+    border-bottom: 1px dashed red;
+    padding: 2rem;
+  }
+</style>
+{% endblock style %} {% block content %}
+{% include 'navbar.html' %}
+
+<h2>items page for {{menu.user}}</h2>
+<a href="{% url 'moms:profile' %}">profile</a>
+<a href="{% url 'moms:menuitems' %}">create menu item</a> {% for item in items %}
+<div class="container">
+  <div class="items">
+    <p>menu name : {{item.menu}}</p>
+    <p>item name : {{item.name}}</p>
+    <p>item desc : {{item.description}}</p>
+    <p>item price : {{item.price}}</p>
+    <p>item available : {{item.is_available}}</p>
+    {% if item.item_image.url != None %}
+    <img
+      width="300px"
+      height="200px"
+      src="{{item.item_image.url}}"
+      alt="item image"
+    />
+    {% endif %}
+    <div>
+      <a href="{% url 'moms:itemupdate' item.id %}"> items update view</a>
+      <a href="{% url 'moms:itemdelete' item.id %}"> items delete view</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

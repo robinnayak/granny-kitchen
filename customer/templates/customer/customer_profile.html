@@ -1,0 +1,77 @@
+{% extends "customer/base.html" %}
+
+{% block style %}
+<style>
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+</style>
+
+{% endblock style %}
+
+
+
+
+{% block content %}
+
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div class="alert alert-{{message.tag}} m-2" id="msg" role="alert">
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="profile">
+    <h2>profile page {{cust_obj.user}}</h2>
+    <div>
+      <p>user : {{cust_obj.user}}</p>
+      <p>email : {{cust_obj.email}}</p>
+      <p>address : {{cust_obj.address}}</p>
+      <p>phone : {{cust_obj.phone_number}}</p>
+      <p>no of orders : {{order_count}}</p>
+
+      {% if cust_obj.profile.url != None %}
+      <img src="{{cust_obj.profile.url}}" alt="profile" srcset="" width="100px" height="150px" />
+      {% endif %}
+      <a href="{% url 'moms:logout' %}">logout</a>
+      <a href="{% url 'customer:customer_update' cust_obj.id %}">update profile</a>
+      <a href="{% url 'customer:customer_delete' cust_obj.id %}">delete profile</a>
+      <a href="{% url 'customer:orderview' %}">order view</a>
+      <a href="{% url 'customer:notify_customer' %}">notification</a>
+      <a href="http://facebook.com">
+        facebook</a>
+      <a href="http://instagram.com">
+        instagram</a>
+    </div>
+  </div>
+  <div class="order">
+    {% for order in orders %}
+    <p>moms : {{order.moms}}</p>
+    <p>order date : {{order.order_date}}</p>
+    <a href="{% url 'customer:delete_order' order.id %}">delete order from order model</a>
+    <hr />
+    {% for item in order.order.all %}
+    {% if item.menu_item.item_image.url is not None %}
+    <img width="250px" height="200px" src="{{item.menu_item.item_image.url}}" alt="" />
+    {% else %}
+    <img width="250px" height="200px" src="" alt="" />
+    {% endif %}
+    <p>item name : {{item.menu_item.name}}</p>
+    <p>item description : {{item.menu_item.description}}</p>
+    <p>item price : {{item.menu_item.price}}</p>
+    <p>status : {{item.status}}</p>
+    <p>delivered : {{item.is_delivered}}</p>
+
+    <a href="{% url 'customer:buy' item.id %}">pre order now</a>
+    <a href="{% url 'customer:deleteitem' item.id %}">delete item</a>
+    <hr />
+    {% endfor %}
+    <hr />
+    <hr />
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

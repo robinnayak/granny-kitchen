@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'navbar.html' %}
+    
+<div>Are you sure to delete {{user}}</div>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit">
+        delete
+    </button>
+    <a href="{% url 'moms:profile' %}">cancel</a>
+</form>
+{% endblock content %}

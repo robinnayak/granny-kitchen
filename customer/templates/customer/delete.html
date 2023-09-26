@@ -1,0 +1,10 @@
+{% extends "customer/base.html" %}
+
+{% block content %}
+<h1>Are you sure ? {{item.menu_item}}</h1>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit">delete</button>
+
+</form>
+{% endblock content %}  

@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block style %}
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .items {
+    flex-basis: 33.33%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+</style>
+
+{% endblock %}
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .items {
+    flex-basis: 33.33%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+</style>
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container">
+  {% for item in items %}
+  <div class="items">
+    <div class="image">
+      {% if item.item_image.url != None %}
+      <img
+        width="300px"
+        height="200px"
+        src="{{item.item_image.url}}"
+        alt="item image"
+        srcset=""
+      />
+      {% else %}
+      <img width="300px" height="200px" src="" alt="item image" srcset="" />
+      {% endif %}
+    </div>
+    <div class="fields_container">
+      <div>item name : {{item.name}}</div>
+      <div>price : {{item.price}}</div>
+      <div>decs : {{item.description}}</div>
+      {% comment %}
+      <div>available : {{item.is_available}}</div>
+      {% endcomment %} {% comment %}
+      <div>available : {{available_check(item.is_available)}}</div>
+      {% endcomment %} {% comment %}
+      <div>available : {{`${available_check(true)}`}}</div>
+      {% endcomment %}
+      <div>
+        available : {% if item.is_available %} yes {% else %} no {% endif %}
+      </div>
+    </div>
+    <a href="{% url 'moms:product' item.id %}"> view product </a>
+    <hr />
+  </div>
+  {% endfor %}
+
+  <script>
+    function available_check(is_available) {
+      if (is_available) {
+        return "yes";
+      } else {
+        return "no";
+      }
+    }
+  </script>
+  {% endblock content %}
+</div>
