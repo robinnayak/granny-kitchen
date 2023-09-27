@@ -1,82 +1,103 @@
-{% extends "base.html" %} 
+{% extends 'base.html' %}
 
 {% block style %}
-<style>
-    .container{
-        display: flex;
-        justify-content: space-evenly;
-    }
-    .item{
-        border: 1px solid red;
-        padding: 1rem;
 
-    }
-    .itemimage{
-        /* border: 1px solid yellow; */
-        min-width: 500px;
-        min-height: 300px;
-    }
-    .itemdetail{
-        display: flex;
-        justify-content: space-between;
-    }
-    .button{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center ;
-        margin-right: 1rem;
-        padding: 0.5rem;
-    }
-    .menudetail{
-        margin-top: 2rem;
-        padding: 1rem;
-        /* border: 1px solid red; */
-    }
+
+<style>
+  /* Basic Styles */
+  .container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+  }
+
+  .item {
+    display: flex;
+  }
+
+  .image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .item-detail {
+    margin-left: 20px;
+    flex: 1;
+  }
+
+  .detail-text {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .inline {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .button a {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .menu-detail {
+    margin-top: 20px;
+  }
+
+  .menu-detail a {
+    color: #007bff;
+    text-decoration: none;
+  }
 </style>
 
 {% endblock style %}
 
-
-
 {% block content %}
-{% include 'navbar.html' %}
-
-<div class="container">
-  <div class="item">
-    <div class="image">
-        {% if item.item_image.url != None %}
-            <img width="450px" height="350px" src="{{item.item_image.url}}" alt="item image" srcset="">
+  {% include 'navbar.html' %}
+  
+  <div class="container" style="background-color: #f4f4f4; padding: 20px;">
+    <div class="item">
+      <div class="image">
+        {% if item.item_image.url %}
+          <img src="{{ item.item_image.url }}" alt="{{ item.name }}" width="450px" height="350px">
         {% else %}
-            <img width="450px" height="350pxpx" src="" alt="item image" srcset="">
+          <img src="" alt="Item image not available" width="450px" height="350px">
         {% endif %}
-    </div>
-    <div class="itemdetail">
-      <div class="items">
-        <div class="detailtext">
-          <div class="inline">item name:{{item.name}}</div>
-          <div class="inline">price:{{item.price}}</div>
-          <div class="inline">description {{item.description}}:</div>
-          <div class="inline">available : {{item.is_available}}</div>
-          <div class="inline">created at :</div>
-          <div class="inline">expiry at:</div>
+      </div>
+      <div class="item-detail">
+        <div class="item-details">
+          <div class="detail-text">
+            <div class="inline"><strong>Item Name:</strong> {{ item.name }}</div>
+            <div class="inline"><strong>Price:</strong> ${{ item.price }}</div>
+            <div class="inline"><strong>Description:</strong> {{ item.description }}</div>
+            {% comment %} <div class="inline"><strong>Available:</strong> {{ item.is_available ? "Yes" : "No" }}</div> {% endcomment %}
+            <div class="inline"><strong>Created At:</strong> {{ item.created_at }}</div>
+            <div class="inline"><strong>Expiry At:</strong> {{ item.expiry_at }}</div>
+          </div>
+        </div>
+        <div class="button">
+          <a href="#">Add to Cart</a>
+          <a href="{% url 'customer:createorder' item.id %}">Pre Order</a>
         </div>
       </div>
-      <div class="button">
-        <a href="">add to cart</a>
-        <a href="{% url 'customer:createorder' item.id %}">pre order</a>
-      </div>
+    </div>
+    <div class="menu-detail">
+      <div><strong>Mom Name:</strong> {{ item.menu.moms }}</div>
+      <div><strong>Mom Email:</strong> {{ item.menu.moms.email }}</div>
+      <div><strong>Phone Number:</strong> {{ item.menu.moms.phone_number }}</div>
+      <div><strong>Menu Name:</strong> {{ item.menu }}</div>
+      <div><strong>Menu Description:</strong> {{ item.menu.description }}</div>
+      <a href="{% url 'customer:momprofile' item.menu.moms.id %}">Visit Mom's Profile</a>
     </div>
   </div>
-  <div class="menudetail">
-    <div>mom name: {{item.menu.moms}}</div>
-    <div>mom email: {{item.menu.moms.email}}</div>
-    <div>phone number: {{item.menu.moms.phone_number}}</div>
-    <div>menu name: {{item.menu}}</div>
-    <div>menu description{{item.menu.description}}</div>
-    <a href="{% url 'customer:momprofile' item.menu.moms.id %}">mom page</a> 
-    <hr />
-    <hr />
-  </div>
-</div>
+
 {% endblock content %}
