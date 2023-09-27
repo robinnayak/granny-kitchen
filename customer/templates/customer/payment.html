@@ -1,13 +1,71 @@
 {% include 'navbar.html' %}
 
+{% block style %}
+<style>
+  /* Container Styles */
+  .payment-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+  }
+
+  /* Order Details Styles */
+  .order-details {
+    margin-bottom: 20px;
+  }
+
+  .order-details p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  /* Payment Form Styles */
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .payment-input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .payment-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .payment-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+
+{% endblock style %}
+
 {% block content %}
-    <div> payment page </div>
-    <div>order item name : {{item_name}} </div>
-    <div>total price to be paid: {{total_price}} </div>
-    <div>quantity : {{quantity}}</div>
-    <form action="" method="POST">
-        {% csrf_token %}
-        pay amount :<input type="text" name="payment" id="payment">
-        <button type="submit">pay</button>
-    </form>
+<div class="payment-container">
+  <h2>Payment Page</h2>
+  <div class="order-details">
+    <p>Order Item Name: {{ item_name }}</p>
+    <p>Total Price to be Paid: Rs {{ total_price }}</p>
+    <p>Quantity: {{ quantity }}</p>
+  </div>
+  <form action="" method="POST" class="payment-form">
+    {% csrf_token %}
+    <label for="payment">Pay Amount:</label>
+    <input type="text" name="payment" id="payment" class="payment-input">
+    <button type="submit" class="payment-button">Pay</button>
+</form>
+</div>
 {% endblock content %}

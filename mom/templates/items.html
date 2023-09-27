@@ -1,43 +1,83 @@
-{% extends "base.html" %} {% block style %}
+{% include 'navbar.html' %}
+{% block style %}
+
 <style>
+  /* Basic Styles */
   .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: "cyan";
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 
   .items {
-    border-bottom: 1px dashed red;
-    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  a {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  a:hover {
+    background-color: #0056b3;
   }
 </style>
-{% endblock style %} {% block content %}
-{% include 'navbar.html' %}
 
-<h2>items page for {{menu.user}}</h2>
-<a href="{% url 'moms:profile' %}">profile</a>
-<a href="{% url 'moms:menuitems' %}">create menu item</a> {% for item in items %}
+{% endblock style %}
+
+{% block content %}
+<h2>Items Page for {{ menu.user }}</h2>
+<a href="{% url 'moms:profile' %}">Profile</a>
+<a href="{% url 'moms:menuitems' %}">Create Menu Item</a>
+{% for item in items %}
 <div class="container">
   <div class="items">
-    <p>menu name : {{item.menu}}</p>
-    <p>item name : {{item.name}}</p>
-    <p>item desc : {{item.description}}</p>
-    <p>item price : {{item.price}}</p>
-    <p>item available : {{item.is_available}}</p>
+    <p>Menu Name: {{ item.menu }}</p>
+    <p>Item Name: {{ item.name }}</p>
+    <p>Item Description: {{ item.description }}</p>
+    <p>Item Price: {{ item.price }}</p>
+    <p>Item Availability: {{ item.is_available }}</p>
     {% if item.item_image.url != None %}
     <img
       width="300px"
       height="200px"
-      src="{{item.item_image.url}}"
-      alt="item image"
+      src="{{ item.item_image.url }}"
+      alt="Item Image"
     />
     {% endif %}
     <div>
-      <a href="{% url 'moms:itemupdate' item.id %}"> items update view</a>
-      <a href="{% url 'moms:itemdelete' item.id %}"> items delete view</a>
+      <a href="{% url 'moms:itemupdate' item.id %}">Update Item</a>
+      <a href="{% url 'moms:itemdelete' item.id %}">Delete Item</a>
     </div>
   </div>
-  {% endfor %}
+</div>
+{% endfor %}
 </div>
 {% endblock content %}

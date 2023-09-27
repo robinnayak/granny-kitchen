@@ -2,71 +2,152 @@
 
 {% block style %}
 <style>
+  /* Container Styles */
   .container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
   }
+
+  /* Alert Styles */
+  .alert {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+  }
+
+  .alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+  }
+
+  /* Profile Styles */
+  .profile {
+    margin-bottom: 20px;
+  }
+
+  .profile h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .profile p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .profile img {
+    width: 100px;
+    height: 150px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .profile a {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .profile a:hover {
+    background-color: #0056b3;
+  }
+
+  /* Order Styles */
+  .order p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .order img {
+    width: 250px;
+    height: 200px;
+  }
+
+  .order a {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .order a:hover {
+    background-color: #0056b3;
+  }
+
 </style>
 
 {% endblock style %}
 
-
-
-
 {% block content %}
-
 <div class="container">
-  {% if messages %} {% for message in messages %}
-  <div class="alert alert-{{message.tag}} m-2" id="msg" role="alert">
-    {{message}}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tag }} m-2" id="msg" role="alert">
+    {{ message }}
   </div>
   {% endfor %}
   {% endif %}
 
   <div class="profile">
-    <h2>profile page {{cust_obj.user}}</h2>
+    <h2>Profile Page {{ cust_obj.user }}</h2>
     <div>
-      <p>user : {{cust_obj.user}}</p>
-      <p>email : {{cust_obj.email}}</p>
-      <p>address : {{cust_obj.address}}</p>
-      <p>phone : {{cust_obj.phone_number}}</p>
-      <p>no of orders : {{order_count}}</p>
+      <p>User: {{ cust_obj.user }}</p>
+      <p>Email: {{ cust_obj.email }}</p>
+      <p>Address: {{ cust_obj.address }}</p>
+      <p>Phone: {{ cust_obj.phone_number }}</p>
+      <p>No of Orders: {{ order_count }}</p>
 
       {% if cust_obj.profile.url != None %}
-      <img src="{{cust_obj.profile.url}}" alt="profile" srcset="" width="100px" height="150px" />
+      <img src="{{ cust_obj.profile.url }}" alt="profile" srcset="" width="100px" height="150px" />
       {% endif %}
-      <a href="{% url 'moms:logout' %}">logout</a>
-      <a href="{% url 'customer:customer_update' cust_obj.id %}">update profile</a>
-      <a href="{% url 'customer:customer_delete' cust_obj.id %}">delete profile</a>
-      <a href="{% url 'customer:orderview' %}">order view</a>
-      <a href="{% url 'customer:notify_customer' %}">notification</a>
-      <a href="http://facebook.com">
-        facebook</a>
-      <a href="http://instagram.com">
-        instagram</a>
+      <a href="{% url 'moms:logout' %}">Logout</a>
+      <a href="{% url 'customer:customer_update' cust_obj.id %}">Update Profile</a>
+      <a href="{% url 'customer:customer_delete' cust_obj.id %}">Delete Profile</a>
+      <a href="{% url 'customer:orderview' %}">Order View</a>
+      <a href="{% url 'customer:notify_customer' %}">Notification</a>
+      <a href="http://facebook.com">Facebook</a>
+      <a href="http://instagram.com">Instagram</a>
     </div>
   </div>
   <div class="order">
     {% for order in orders %}
-    <p>moms : {{order.moms}}</p>
-    <p>order date : {{order.order_date}}</p>
-    <a href="{% url 'customer:delete_order' order.id %}">delete order from order model</a>
+    <p>Moms: {{ order.moms }}</p>
+    <p>Order Date: {{ order.order_date }}</p>
+    <a href="{% url 'customer:delete_order' order.id %}">Delete Order from Order Model</a>
     <hr />
     {% for item in order.order.all %}
     {% if item.menu_item.item_image.url is not None %}
-    <img width="250px" height="200px" src="{{item.menu_item.item_image.url}}" alt="" />
+    <img width="250px" height="200px" src="{{ item.menu_item.item_image.url }}" alt="" />
     {% else %}
     <img width="250px" height="200px" src="" alt="" />
     {% endif %}
-    <p>item name : {{item.menu_item.name}}</p>
-    <p>item description : {{item.menu_item.description}}</p>
-    <p>item price : {{item.menu_item.price}}</p>
-    <p>status : {{item.status}}</p>
-    <p>delivered : {{item.is_delivered}}</p>
+    <p>Item Name: {{ item.menu_item.name }}</p>
+    <p>Item Description: {{ item.menu_item.description }}</p>
+    <p>Item Price: {{ item.menu_item.price }}</p>
+    <p>Status: {{ item.status }}</p>
+    <p>Delivered: {{ item.is_delivered }}</p>
 
-    <a href="{% url 'customer:buy' item.id %}">pre order now</a>
-    <a href="{% url 'customer:deleteitem' item.id %}">delete item</a>
+    <a href="{% url 'customer:buy' item.id %}">Pre Order Now</a>
+    <a href="{% url 'customer:deleteitem' item.id %}">Delete Item</a>
     <hr />
     {% endfor %}
     <hr />
@@ -74,4 +155,6 @@
     {% endfor %}
   </div>
 </div>
+
+
 {% endblock content %}

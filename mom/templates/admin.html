@@ -1,38 +1,74 @@
 {% extends "base.html" %}
 
+{% block style %}
+
+<style>
+    /* Container Styles */
+  .admin-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+  }
+
+  /* Order Count Badge Styles */
+  .order-count-badge {
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+  .order-count-badge span {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Order Details Styles */
+  .order-details {
+    margin-bottom: 20px;
+  }
+
+  .order-details p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  /* Horizontal Line Styles */
+  hr {
+      border: 0;
+      height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
+  }
+</style>
+
+{% endblock style %}
+
 {% block content %}
 {% include 'navbar.html' %}
 
-<p> admin page </p>
-<p>No of orders Accepted : {{count}}</p>
-
-====================================================
-{% for accept in order_accept %}
-<p> customer name: 
-    {{accept.order_placed.order_placed.order.customer.user}}
-</p>
-<p>
-    no of quantity: 
-    {{accept.order_placed.order_placed.quantity}}
-</p>
-<p>
-    total price : Rs
-    {{accept.order_placed.order_placed.total_price}}
-</p>
-<p>
-    status: 
-    {{accept.order_placed.order_placed.status}}
-</p>
-<p>
-    delivery address : 
-    {{accept.order_placed.order_placed.order.delivery_address}}
-</p>
-<p>
-    ordered data : 
-    {{accept.order_placed.order_placed.order.order_date}}
-</p>
-<p>===========================================================================</p>
-{% endfor %}
-
-
+<div class="admin-container">
+    <p>Admin Page</p>
+    <p class="order-count-badge">No. of Orders Accepted: <span>{{ count }}</span></p>
+    
+    <hr />
+    
+    {% for accept in order_accept %}
+    <div class="order-details">
+        <p>Customer Name: {{ accept.order_placed.order_placed.order.customer.user }}</p>
+        <p>No. of Quantity: {{ accept.order_placed.order_placed.quantity }}</p>
+        <p>Total Price: Rs {{ accept.order_placed.order_placed.total_price }}</p>
+        <p>Status: {{ accept.order_placed.order_placed.status }}</p>
+        <p>Delivery Address: {{ accept.order_placed.order_placed.order.delivery_address }}</p>
+        <p>Ordered Date: {{ accept.order_placed.order_placed.order.order_date }}</p>
+    </div>
+    
+    <hr />
+    {% endfor %}
+</div>
 {% endblock content %}

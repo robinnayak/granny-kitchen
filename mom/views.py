@@ -215,11 +215,8 @@ def order_accept(request, pk):
             if order_placed_obj:
                 order_placed = OrderPlaced.objects.get(id=order_placed_obj.id)
                 order_placed_obj1, created = OrderAccept.objects.get_or_create(order_placed=order_placed, is_ordered=True)
+                return redirect('moms:home')
                 
-                if created:
-                    print("notify item object: order accepted", order_placed_obj1)
-                
-                return HttpResponse("Order Placed ID: " + str(order_placed_obj.id))
             else:
                 raise Http404("OrderPlaced not found for this notification.")
         except Notifcation.DoesNotExist:

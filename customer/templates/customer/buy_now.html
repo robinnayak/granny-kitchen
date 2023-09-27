@@ -1,39 +1,104 @@
-{% extends "customer/base.html" %} {% block content %}
-<div class="order">order placed succesfully</div>
+{% extends "customer/base.html" %}
+{% block style %}
+<style>
+    /* Container Styles */
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        background-color: #ffffff;
+    }
+
+    /* Order Styles */
+    .order {
+        background-color: #28a745;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 5px;
+    }
+
+    .order_placed {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .order_placed p {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .order_placed a {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .order_placed a:hover {
+        background-color: #0056b3;
+    }
+
+    /* Item Styles */
+    .item {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .image img {
+        width: 250px;
+        height: 200px;
+        border-radius: 5px;
+    }
+
+    .detailtext {
+        margin-left: 20px;
+    }
+
+    .inline {
+        margin: 5px 0;
+    }
+</style>
+
+{% endblock style %}
+{% block content %}
+<div class="order">Order Placed Successfully</div>
 
 <div class="container">
     <div class="ordered_item">
         <div class="item">
             <div class="image">
                 {% if ordered_item.menu_item.item_image.url != None %}
-                <img width="250px" height="200px" src="{{ordered_item.menu_item.item_image.url}}" alt="item image" srcset="">
+                <img width="250px" height="200px" src="{{ ordered_item.menu_item.item_image.url }}" alt="item image" srcset="">
                 {% else %}
-                <img width="450px" height="350pxpx" src="" alt="item image" srcset="">
+                <img width="450px" height="350px" src="" alt="item image" srcset="">
                 {% endif %}
             </div>
             <div class="detailtext">
-                <div class="inline">item name:{{ordered_item.menu_item.name}}</div>
-                <div class="inline">price:{{ordered_item.menu_item.price}}</div>
-                <div class="inline">total price:{{order_placed.order_placed.total_price}}</div>
-                <div class="inline">No of quantity:{{order_placed.order_placed.quantity}}</div>
-                
-                <div class="inline">description :  {{ordered_item.menu_item.description}}</div>
-                <div class="inline">available : {{ordered_item.menu_item.is_available}}</div>
-                <div class="inline">created at :</div>
-                <div class="inline">expiry at:</div>
+                <div class="inline">Item Name: {{ ordered_item.menu_item.name }}</div>
+                <div class="inline">Price: {{ ordered_item.menu_item.price }}</div>
+                <div class="inline">Total Price: {{ order_placed.order_placed.total_price }}</div>
+                <div class="inline">No of Quantity: {{ order_placed.order_placed.quantity }}</div>
+                <div class="inline">Description: {{ ordered_item.menu_item.description }}</div>
+                <div class="inline">Available: {{ ordered_item.menu_item.is_available }}</div>
+                <div class="inline">Created At:</div>
+                <div class="inline">Expiry At:</div>
             </div>
         </div>
-
     </div>
     <div class="order_placed">
-        <p>order is placed request is sent for order id {{order_placed.id}}   </p>
-        <p>order is requestd for the mom "{{order_placed.order_placed.order.moms}}"</p>
-        <a href="{% url 'moms:home' %}">home</a>
+        <p>Order is placed. Request is sent for Order ID: {{ order_placed.id }}</p>
+        <p>Order is requested for the mom "{{ order_placed.order_placed.order.moms }}"</p>
+        <a href="{% url 'moms:home' %}">Home</a>
     </div>
 </div>
 
-<!-- context = {'ordered_item':ordered_item_obj,'order_placed':order_placed_obj} -->
-
-
 {% endblock content %}
-

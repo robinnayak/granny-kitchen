@@ -1,19 +1,85 @@
 {% extends "base.html" %}
 
+{% block style %}
+<style>
+    /* Basic Styles */
+    .container {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: #ffffff;
+    }
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .notification-list {
+      list-style: none;
+      padding: 0;
+    }
+  
+    .notification-item {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+  
+    .message-text {
+      font-size: 16px;
+    }
+  
+    .message-id {
+      font-size: 14px;
+      color: #777;
+    }
+  
+    .action-buttons {
+      margin-top: 10px;
+    }
+  
+    .accept-button,
+    .cancel-button {
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  
+    .cancel-button {
+      background-color: #ff0000;
+    }
+  </style>
+{% endblock style %}
+
+
 {% block content %}
 {% include 'navbar.html' %}
 
-    <p> notification page:  </p>
+<div class="container">
+  <h2>Notification Page</h2>
 
+  <ul class="notification-list">
     {% for msg in order_message %}
-        <ul>
-            <li>
-                <p>{{msg}}</p>
-                <p>{{msg.id}}</p>
-                <a href="{% url 'moms:order_accept' msg.id %}">order accept</a> 
-                <a href="#">cancel</a>
-            </li>
-        </ul>
+      <li class="notification-item">
+        <p class="message-text">{{ msg.message }}</p>
+        <p class="message-id">Message ID: {{ msg.id }}</p>
+        <div class="action-buttons">
+          <a href="{% url 'moms:order_accept' msg.id %}" class="accept-button">Accept</a>
+          <a href="#" class="cancel-button">Cancel</a>
+        </div>
+      </li>
     {% endfor %}
+  </ul>
+</div>
 
 {% endblock content %}
