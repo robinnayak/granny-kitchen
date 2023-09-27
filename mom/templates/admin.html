@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<p> admin page </p>
+<p>No of orders Accepted : {{count}}</p>
+
+====================================================
+{% for accept in order_accept %}
+<p> customer name: 
+    {{accept.order_placed.order_placed.order.customer.user}}
+</p>
+<p>
+    no of quantity: 
+    {{accept.order_placed.order_placed.quantity}}
+</p>
+<p>
+    total price : Rs
+    {{accept.order_placed.order_placed.total_price}}
+</p>
+<p>
+    status: 
+    {{accept.order_placed.order_placed.status}}
+</p>
+<p>
+    delivery address : 
+    {{accept.order_placed.order_placed.order.delivery_address}}
+</p>
+<p>
+    ordered data : 
+    {{accept.order_placed.order_placed.order.order_date}}
+</p>
+<p>===========================================================================</p>
+{% endfor %}
+
+
+{% endblock content %}

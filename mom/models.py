@@ -117,7 +117,7 @@ class Notifcation(models.Model):
 
 class OrderAccept(models.Model):
     order_placed = models.OneToOneField(OrderPlaced, on_delete=models.CASCADE,related_name='order_placed_accept')
-    is_ordered = models.BooleanField(default=False)
+    is_ordered = models.BooleanField(default=False) # is_accepted
     
     def __str__(self):
         return str(self.id)

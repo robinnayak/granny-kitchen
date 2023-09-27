@@ -8,6 +8,10 @@ from django.http import HttpResponse, Http404
 # Create your views here.
 def HomeView(request):
     items = MenuItem.objects.all().select_related('menu')
+    if request.method == "GET":
+        selected_item = request.GET.get('selecteditem')
+        if selected_item != None:
+            items = MenuItem.objects.filter(name__icontains=selected_item).select_related('menu')
     context = {"items":items}
     return render(request,'home.html',context)
 
@@ -17,8 +21,13 @@ def ProductView(request,pk):
     return render(request,'product.html',context)
 
 def ProductViewPage(request):
-    item = MenuItem.objects.all()
-    context = {'items':item}
+    items = MenuItem.objects.all().select_related('menu')
+    if request.method == "GET":
+        selected_item = request.GET.get('selecteditem')
+        if selected_item != None:
+            items = MenuItem.objects.filter(name__icontains=selected_item).select_related('menu')
+
+    context = {'items':items}
     return render(request,'productpage.html',context)
 
 
@@ -195,20 +204,36 @@ def notify_purchase_to_mom(request):
     return redirect('moms:login')
 
 def order_accept(request, pk):
-    try:
-        notification_obj = get_object_or_404(Notifcation, id=pk)
-        order_placed_obj = notification_obj.order_placed
-        if order_placed_obj:
-            order_placed = OrderPlaced.objects.get(id=order_placed_obj.id)
-            order_placed_obj1,created = OrderAccept.objects.get_or_create(order_placed = order_placed,is_ordered = True)
-            if created:
+    if request.user.is_authenticated == True:
+        try:
+            notification_obj = get_object_or_404(Notifcation, id=pk)
+            order_placed_obj = notification_obj.order_placed
+            if order_placed_obj:
+                order_placed = OrderPlaced.objects.get(id=order_placed_obj.id)
+                order_placed_obj1,created = OrderAccept.objects.get_or_create(order_placed = order_placed,is_ordered = True) # is_accepted = True
+                if created:
+                    print("notify item object : order accepted ",order_placed_obj1)
+                
                 print("notify item object : order accepted ",order_placed_obj1)
-            
-            print("notify item object : order accepted ",order_placed_obj1)
 
-            return HttpResponse("Order Placed ID: " + str(order_placed_obj.id))
-        else:
-            raise Http404("OrderPlaced not found for this notification.")
-    except Notifcation.DoesNotExist:
-        raise Http404("Notification does not exist.")
+                return HttpResponse("Order Placed ID: " + str(order_placed_obj.id))
+            else:
+                raise Http404("OrderPlaced not found for this notification.")
+        except Notifcation.DoesNotExist:
+            raise Http404("Notification does not exist.")
 
+    else :
+        return redirect('moms:login')
+
+
+def mom_view(request):
+    if request.user.is_authenticated == True:
+        mom_username = request.user.email
+        order_accept = OrderAccept.objects.filter(order_placed__order_placed__order__moms__email=mom_username, is_ordered=True)
+        order_accept_count = order_accept.count() 
+        context = {'order_accept':order_accept,'count':order_accept_count}
+        return render(request,'admin.html',context)
+        # order_accept = OrderAccept.objects.filter(is_ordered = True)
+
+    else:
+        return redirect('moms:login')

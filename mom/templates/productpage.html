@@ -35,6 +35,10 @@
 {% endblock style %} {% block content %}
 
 {% include 'navbar.html' %}
+<form action="" method="GET">
+  <input type="text" name="selecteditem" id="selecteditem">
+  <input type="submit" value="search">
+</form>
 <div class="container">
   {% for item in items %}
 
@@ -80,4 +84,6 @@
     <hr />
   </div>
 </div>
+{% empty %}
+No Data Fonud  
 {% endfor %} {% endblock content %}

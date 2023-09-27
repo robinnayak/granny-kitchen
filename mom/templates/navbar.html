@@ -53,13 +53,14 @@
             <ul>
                 <li><a href="{% url 'moms:home' %}">Home</a></li>
                 <li><a href="{% url 'moms:productview' %}">Product</a></li>
+                <li><a href="{% url 'moms:profile' %}">profile</a></li>
+                <li><a href="{% url 'moms:mom_view' %}">accepted order</a></li>
+                <li><a href="{% url 'customer:mom-profile' %}">moms</a></li>
                 {% if request.user.is_authenticated != True %}
                 <li><a href="{% url 'moms:login' %}">Login</a></li>
                 {% else  %}
                 <li><a href="{% url 'moms:logout' %}">Logout</a></li>
                 {% endif %}
-                <li><a href="{% url 'moms:profile' %}">profile</a></li>
-                <li><a href="{% url 'customer:mom-profile' %}">moms</a></li>
             </ul>
         </div>
         <div class="nav-profile">

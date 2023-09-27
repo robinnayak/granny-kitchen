@@ -26,6 +26,8 @@ urlpatterns = [
     path('notify-mom/',views.notify_purchase_to_mom,name='notify_mom'),
     path('order-accept/<str:pk>/',views.order_accept,name="order_accept"),
     
+    path('mom-view/',views.mom_view,name="mom_view"),
+    
     path("login/",LoginPage,name="login"),
     path("logout/",Logout,name="logout"),
     

@@ -35,6 +35,10 @@
 {% block content %}
 {% include 'navbar.html' %}
 <div class="container">
+  <form action="" method="GET">
+    <input type="text" name="selecteditem" id="selecteditem">
+    <input type="submit" value="search">
+  </form>
   {% for item in items %}
   <div class="items">
     <div class="image">
@@ -68,6 +72,8 @@
     <a href="{% url 'moms:product' item.id %}"> view product </a>
     <hr />
   </div>
+  {% empty %}
+    No Data Fonud  
   {% endfor %}
 
   <script>
